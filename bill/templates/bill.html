@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill</title>
+
+    <!-- Inventory Button -->
+    <a href="{% url 'inventory' %}">
+        <button>🛒 Go to Inventory</button>
+    </a>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 30px;
+            background: #f4f6f8;
+        }
+        .bill-container {
+            width: 80%;
+            margin: auto;
+            border: 2px solid #2c3e50;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .customer-details {
+            margin-bottom: 20px;
+        }
+        .customer-details label {
+            display: inline-block;
+            width: 140px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        .customer-details input {
+            width: 200px;
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #34495e;
+        }
+        th {
+            background: #34495e;
+            color: white;
+        }
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+        .total-section {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bill-container">
+        <h1>Customer Bill</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <!-- Customer Details -->
+            <div class="customer-details">
+                <p><label>Customer Name:</label> <input type="text" name="name" required></p>
+                <p><label>Phone Number:</label> <input type="text" name="phone" required></p>
+                <p><label>Email:</label> <input type="email" name="email" required></p>
+                <p><label>Address:</label> <input type="text" name="address" required></p>
+            </div>
+
+            <h2>Product Details</h2>
+            <table id="billTable">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price (₹)</th>
+                    <th>Quantity</th>
+                    <th>Discount (%)</th>
+                    <th>Total (₹)</th>
+                </tr>
+
+                {% for i in "12345" %}
+                <tr>
+                    <td>
+                        <select name="product_{{ forloop.counter }}" onchange="updateRow(this)">
+                            <option value="">--Select Product--</option>
+                            {% for product in products %}
+                                <option value="{{ product.id }}" data-price="{{ product.price }}" data-discount="{{ product.discount }}">
+                                    {{ product.product }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="price">0</td>
+                    <td><input type="number" name="quantity_{{ forloop.counter }}" min="1" value="1" onchange="calculateTotal(this)"></td>
+                    <td class="discount">0</td>
+                    <td class="row-total">0</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <div class="total-section">
+                Grand Total: ₹<span id="grandTotal">0</span>
+            </div>
+
+            <button type="submit">Generate Bill</button>
+        </form>
+    </div>
+
+    <script>
+        function updateRow(selectElem) {
+            const row = selectElem.closest("tr");
+            const priceCell = row.querySelector(".price");
+            const discountCell = row.querySelector(".discount");
+            const totalCell = row.querySelector(".row-total");
+            const qtyInput = row.querySelector("input[type='number']");
+
+            if (selectElem.value) {
+                const price = parseFloat(selectElem.selectedOptions[0].dataset.price);
+                const discount = parseFloat(selectElem.selectedOptions[0].dataset.discount);
+
+                priceCell.textContent = price.toFixed(2);
+                discountCell.textContent = discount;
+
+                const quantity = parseInt(qtyInput.value) || 1;
+                const discountedPrice = price - (price * discount / 100);
+                const total = discountedPrice * quantity;
+                totalCell.textContent = total.toFixed(2);
+            } else {
+                priceCell.textContent = "0";
+                discountCell.textContent = "0";
+                totalCell.textContent = "0";
+            }
+
+            updateGrandTotal();
+        }
+
+        function calculateTotal(inputElem) {
+            const row = inputElem.closest("tr");
+            const price = parseFloat(row.querySelector(".price").textContent) || 0;
+            const discount = parseFloat(row.querySelector(".discount").textContent) || 0;
+            const quantity = parseInt(inputElem.value) || 1;
+
+            const discountedPrice = price - (price * discount / 100);
+            const total = discountedPrice * quantity;
+            row.querySelector(".row-total").textContent = total.toFixed(2);
+
+            updateGrandTotal();
+        }
+
+        function updateGrandTotal() {
+            let grandTotal = 0;
+            document.querySelectorAll(".row-total").forEach(cell => {
+                grandTotal += parseFloat(cell.textContent) || 0;
+            });
+            document.getElementById("grandTotal").textContent = grandTotal.toFixed(2);
+        }
+    </script>
+</body>
+</html>

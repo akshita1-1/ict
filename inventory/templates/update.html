@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Item</title>
+  <style>
+    body { background:#f4f6f9; font-family: Arial, sans-serif; text-align:center; }
+    form { margin-top:50px; }
+    input { padding:8px; margin:5px; border-radius:5px; border:1px solid #ccc; }
+    button { padding:8px 12px; background:#4a148c; color:white; border:none; border-radius:5px; cursor:pointer; }
+    button:hover { background:#6a1b9a; }
+  </style>
+</head>
+<body>
+  <h1>Edit Inventory Item</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="product" value="{{ data.product }}" required>
+    <input type="number" name="price" value="{{ data.price }}" required>
+    <input type="number" name="quantity" value="{{ data.quantity }}" required>
+    <input type="number" name="discount" value="{{ data.discount }}" required>
+    <button type="submit">Update</button>
+  </form>
+</body>
+</html>

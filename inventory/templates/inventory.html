@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Management</title>
+  <style>
+    body { background:#f4f6f9; font-family: Arial, sans-serif; text-align:center; }
+    h1 { color:#4a148c; margin:20px 0; }
+    form { margin:20px 0; }
+    input { padding:8px; margin:5px; border-radius:5px; border:1px solid #ccc; }
+    button { padding:8px 12px; background:#4a148c; color:white; border:none; border-radius:5px; cursor:pointer; }
+    button:hover { background:#6a1b9a; }
+    table { width:80%; margin:auto; border-collapse:collapse; background:white; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+    th, td { padding:10px; border-bottom:1px solid #ddd; text-align:center; }
+    th { background:#d1c4e9; }
+    a { padding:6px 10px; margin:0 3px; border-radius:5px; text-decoration:none; color:white; }
+    .edit { background:#4caf50; }
+    .delete { background:#f44336; }
+  </style>
+</head>
+<body>
+  <h1>Inventory Management</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="product" placeholder="Product Name" required>
+    <input type="number" name="price" placeholder="Price" required>
+    <input type="number" name="quantity" placeholder="Quantity" required>
+    <input type="number" name="discount" placeholder="Discount (%)" required>
+    <button type="submit">Add Item</button>
+  </form>
+
+  <table>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Discount</th>
+      <th>Actions</th>
+    </tr>
+    {% for i in data %}
+    <tr>
+      <td>{{ i.product }}</td>
+      <td>{{ i.price }}</td>
+      <td>{{ i.quantity }}</td>
+      <td>{{ i.discount }}%</td>
+      <td>
+        <a href="{% url 'edit' i.id %}" class="edit">Edit</a>
+        <a href="{% url 'delete' i.id %}" class="delete">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
