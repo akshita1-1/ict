@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Table </title>
+  <style>
+    body {
+      background: #fffaf0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      margin: 0;
+    }
+    h1 { color: #ff8a65; margin: 20px 0; }
+    form {
+      margin-top: 20px;
+    }
+    input {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ffd7b5;
+      margin: 5px;
+    }
+    button {
+      padding: 8px 12px;
+      background: #ff8a65;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background: #ff7043; }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 70%;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ffd7b5;
+    }
+    th { background: #ffe0b2; color: #5d4037; }
+    tr.completed td {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h1> Task Table </h1>
+
+  <!-- Form for User Input -->
+  <form id="taskForm">
+    {% csrf_token %}
+    <input type="text" id="taskInput" placeholder="Task" required>
+    <input type="date" id="startInput" placeholder="Task" required>
+    <input type="date" id="endInput" placeholder="Task" required>
+    <button type="submit">Add Task</button>
+  </form>
+
+
+
+
+  

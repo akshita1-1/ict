@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffcc80;
+            color: #333;
+        }
+
+        header {
+            background-color: ##ffeb3b;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            background-color: #ffeb3b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ffeb3b;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Checkout</h1>
+    </header>
+
+    <div class="contact-container">
+        <h2>Checkout</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" name="name" id="" placeholder="Enter your name">
+            <input type="text" name="number" id="" placeholder="Enter your number">
+            <button type="submit">SUBMIT</button>
+        </form>
+        <div>
+        {% for i in data %}
+            {{i.name}} - {{i.number}} <br>
+         {% endfor %}
+        </div>
+
+
+    </div>
+         
+</body>
+</html>

@@ -1,0 +1,50 @@
+
+'''class Animal:
+    """The base class for all animals."""
+    def eat(self):
+        """A general animal action."""
+        print("Eating...")
+
+# The intermediate class (Parent)
+# It inherits from Animal.
+class Dog(Animal):
+    """Represents a dog, which is a type of Animal."""
+    def bark(self):
+        """A dog-specific action."""
+        print("Barking...")
+
+# The derived class (Child)
+# It inherits from Dog.
+class Puppy(Dog):
+    """Represents a puppy, which is a type of Dog."""
+    def weep(self):
+        """A puppy-specific action."""
+        print("Weeping...")
+
+# --- Demonstration ---
+
+# Create an object of the Puppy class
+p = Puppy()
+
+# The Puppy object 'p' can access methods from all its parent classes:
+print("Calling the Puppy's own method:")
+p.weep()  # Method from Puppy class
+
+print("\nCalling the Dog's method:")
+p.bark()  # Method from Dog class
+
+print("\nCalling the Animal's method:")
+p.eat()   # Method from Animal class'''
+
+class class1():
+    def __init__ (self):
+        pass
+    id = 10
+    name = 'absd'
+class class2(class1):
+    a= 5
+class class3(class2):
+    a="bfgj"
+obj = class3()
+print(obj.id)
+    
