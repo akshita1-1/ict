@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fdf6ee; /* Soft beige */
+            text-align: center;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 40px;
+            color: #5c4033;
+            font-weight: 500;
+        }
+
+        p {
+            margin-top: 10px;
+            color: #7b5843;
+            font-weight: 400;
+        }
+
+        .role-container {
+            margin-top: 120px;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .role-btn {
+            display: inline-block;
+            width: 200px;
+            height: 60px;
+            margin: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* Role Button Colors (Matching Theme) */
+        .seller {
+            background-color: #c8a27a; /* Muted beige-gold */
+        }
+
+        .customer {
+            background-color: #8d6e63; /* Warm brown */
+        }
+
+        .role-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* Smooth fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ username }}! 🎉</h1>
+    <p>Please choose your role:</p>
+
+    <div class="role-container">
+        <a href="{% url 'seller' %}"><button class="role-btn seller">Seller</button></a>
+        <a href="{% url 'customer' %}"><button class="role-btn customer">Customer</button></a>
+    </div>
+</body>
+</html>

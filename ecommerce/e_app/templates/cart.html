@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fdf6ee; /* Soft beige */
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-top: 30px;
+            color: #5c4033;
+            font-weight: 500;
+        }
+
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 70%;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(92, 64, 51, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(92, 64, 51, 0.15);
+        }
+
+        th {
+            background: #c8a27a; /* Muted beige-gold */
+            color: white;
+            font-weight: 500;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(200, 162, 122, 0.08); /* Light beige hover */
+        }
+
+        .total td {
+            font-weight: 600;
+            color: #5c4033;
+            background: rgba(200, 162, 122, 0.08);
+        }
+
+        .checkout-btn {
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: #8d6e63; /* Warm brown */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .checkout-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        a {
+            text-decoration: none;
+            color: #7b5843;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 20px;
+            transition: 0.2s;
+        }
+
+        a:hover {
+            color: #5c4033;
+        }
+
+        p {
+            margin-top: 30px;
+            color: #7b5843;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Shopping Cart 🛒</h1>
+
+    {% if cart_items %}
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>₹{{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.product.price|floatformat:2|add:item.quantity|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="total">
+                <td colspan="3">Total</td>
+                <td>₹{{ total }}</td>
+            </tr>
+        </table>
+
+        <a href="{% url 'checkout' %}">
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </a>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'customer' %}">← Back to Shop</a>
+</body>
+</html>
